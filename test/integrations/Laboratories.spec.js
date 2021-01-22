@@ -72,6 +72,11 @@ describe("Integrations tests", () => {
             });
 
             it("should register a new laboratory", () => {
+                console.log(process.env.NODE_SERVER);
+                console.log(process.env.NODE_SERVER);
+                console.log(process.env.NODE_SERVER);
+                console.log(process.env.NODE_SERVER);
+                console.log(process.env.NODE_SERVER);
                 return chai
                     .request(process.env.NODE_SERVER)
                     .post("/laboratories")
