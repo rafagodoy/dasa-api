@@ -17,22 +17,22 @@ const mockUserAuthenticated = {
     token: "",
 };
 
-const mockLaboratory = {
-    name: faker.company.companyName(),
-    address: faker.address.streetAddress(),
+const mockExam = {
+    name: faker.random.word(),
+    type: "clinical_analysis",
 };
 
-const mockLaboratoryRegistered = {
-    idLaboratory: "",
+const mockExamRegistered = {
+    idExam: "",
 };
 
-const mockLaboratoryToUpdate = {
-    name: faker.company.companyName(),
-    address: faker.address.streetAddress(),
+const mockExamToUpdate = {
+    name: faker.random.word(),
+    type: "image",
 };
 
 describe("Integrations tests", () => {
-    describe("Laboratories", () => {
+    describe("Exams", () => {
         describe("/POST", () => {
             it("should register a new user in database", () => {
                 return chai
@@ -44,7 +44,7 @@ describe("Integrations tests", () => {
                             throw new Error(chai.expect(res).have.status(200));
                         }
 
-                        chai.expect(res).have.status(200);
+                        return chai.expect(res).have.status(200);
                     })
                     .catch((err) => {
                         throw err;
@@ -64,32 +64,27 @@ describe("Integrations tests", () => {
                         mockUserAuthenticated.token = res.body.token;
                         mockUserAuthenticated.idUser = res.body.user.id_users;
 
-                        chai.expect(res).have.status(200);
+                        return chai.expect(res).have.status(200);
                     })
                     .catch((err) => {
                         throw err;
                     });
             });
 
-            it("should register a new laboratory", () => {
-                console.log(process.env.NODE_SERVER);
-                console.log(process.env.NODE_SERVER);
-                console.log(process.env.NODE_SERVER);
-                console.log(process.env.NODE_SERVER);
-                console.log(process.env.NODE_SERVER);
+            it("should register a new exam", () => {
                 return chai
                     .request(process.env.NODE_SERVER)
-                    .post("/laboratories")
-                    .send({ ...mockLaboratory })
+                    .post("/exams")
+                    .send({ ...mockExam })
                     .set("Authorization", `Bearer ${mockUserAuthenticated.token}`)
                     .then((res) => {
                         if (res.statusCode !== 200) {
                             throw new Error(chai.expect(res).have.status(200));
                         }
 
-                        mockLaboratoryRegistered.idLaboratory = res.body.laboratory.id_laboratories;
+                        mockExamRegistered.idExam = res.body.exam.id_exam;
 
-                        chai.expect(res).have.status(200);
+                        return chai.expect(res).have.status(200);
                     })
                     .catch((err) => {
                         throw err;
@@ -98,18 +93,18 @@ describe("Integrations tests", () => {
         });
 
         describe("/PUT", () => {
-            it("should update a laboratory registered", () => {
+            it("should update a exam registered", () => {
                 return chai
                     .request(process.env.NODE_SERVER)
-                    .put(`/laboratories/${mockLaboratoryRegistered.idLaboratory}`)
-                    .send({ ...mockLaboratoryToUpdate })
+                    .put(`/exams/${mockExamRegistered.idExam}`)
+                    .send({ ...mockExamToUpdate })
                     .set("Authorization", `Bearer ${mockUserAuthenticated.token}`)
                     .then((res) => {
                         if (res.statusCode !== 200) {
                             throw new Error(chai.expect(res).have.status(200));
                         }
 
-                        chai.expect(res).have.status(200);
+                        return chai.expect(res).have.status(200);
                     })
                     .catch((err) => {
                         throw err;
@@ -118,53 +113,17 @@ describe("Integrations tests", () => {
         });
 
         describe("/GET", () => {
-            it("should show informations about a laboratory", () => {
+            it("should show a list of active exams", () => {
                 return chai
                     .request(process.env.NODE_SERVER)
-                    .get(`/laboratories/${mockLaboratoryRegistered.idLaboratory}`)
+                    .get(`/exams`)
                     .set("Authorization", `Bearer ${mockUserAuthenticated.token}`)
                     .then((res) => {
                         if (res.statusCode !== 200) {
                             throw new Error(chai.expect(res).have.status(200));
                         }
 
-                        chai.expect(res).have.status(200);
-                    })
-                    .catch((err) => {
-                        throw err;
-                    });
-            });
-
-            it("should show a list of active laboratories", () => {
-                return chai
-                    .request(process.env.NODE_SERVER)
-                    .get(`/laboratories`)
-                    .set("Authorization", `Bearer ${mockUserAuthenticated.token}`)
-                    .then((res) => {
-                        if (res.statusCode !== 200) {
-                            throw new Error(chai.expect(res).have.status(200));
-                        }
-
-                        chai.expect(res).have.status(200);
-                    })
-                    .catch((err) => {
-                        throw err;
-                    });
-            });
-        });
-
-        describe("/DELETE", () => {
-            it("should delete a laboratory", () => {
-                return chai
-                    .request(process.env.NODE_SERVER)
-                    .delete(`/laboratories/${mockLaboratoryRegistered.idLaboratory}`)
-                    .set("Authorization", `Bearer ${mockUserAuthenticated.token}`)
-                    .then((res) => {
-                        if (res.statusCode !== 200) {
-                            throw new Error(chai.expect(res).have.status(200));
-                        }
-
-                        chai.expect(res).have.status(200);
+                        return chai.expect(res).have.status(200);
                     })
                     .catch((err) => {
                         throw err;
