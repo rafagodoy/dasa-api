@@ -24,10 +24,9 @@ jobs:
       uses: actions/setup-node@v1
       with:
         node-version: '12.x'
-    - run: npm install
+    - run: npm install --production
     - run: npm ci
     - run: npm run build --if-present
-    - run: NODE_ENV=production npm start
     - run: npm test
 
   release:
