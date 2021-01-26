@@ -17,22 +17,12 @@ const mockUserAuthenticated = {
     token: "",
 };
 
-const mockExam = {
-    name: faker.random.word(),
-    type: "clinical_analysis",
-};
-
-const mockExamRegistered = {
-    idExam: "",
-};
-
-const mockExamToUpdate = {
-    name: faker.random.word(),
-    type: "image",
+const mockExamLaboratoryRegistered = {
+    idExamLaboratory: "",
 };
 
 describe("Integrations tests", () => {
-    describe("Exams", () => {
+    describe("Exams laboratories", () => {
         describe("/POST", () => {
             it("should register a new user in database", () => {
                 return chai
@@ -71,74 +61,18 @@ describe("Integrations tests", () => {
                     });
             });
 
-            it("should register a new exam", () => {
+            it("should associate a exam in the laboratory", () => {
                 return chai
                     .request(process.env.NODE_SERVER)
-                    .post("/exams")
-                    .send({ ...mockExam })
+                    .post("/laboratories/1/exams/2/associate")
                     .set("Authorization", `Bearer ${mockUserAuthenticated.token}`)
                     .then((res) => {
                         if (res.statusCode !== 200) {
                             throw new Error(chai.expect(res).have.status(200));
                         }
 
-                        mockExamRegistered.idExam = res.body.exam.id_exams;
-
-                        return chai.expect(res).have.status(200);
-                    })
-                    .catch((err) => {
-                        throw err;
-                    });
-            });
-        });
-
-        describe("/PUT", () => {
-            it("should update a exam registered", () => {
-                return chai
-                    .request(process.env.NODE_SERVER)
-                    .put(`/exams/${mockExamRegistered.idExam}`)
-                    .send({ ...mockExamToUpdate })
-                    .set("Authorization", `Bearer ${mockUserAuthenticated.token}`)
-                    .then((res) => {
-                        if (res.statusCode !== 200) {
-                            throw new Error(chai.expect(res).have.status(200));
-                        }
-
-                        return chai.expect(res).have.status(200);
-                    })
-                    .catch((err) => {
-                        throw err;
-                    });
-            });
-        });
-
-        describe("/GET", () => {
-            it("should show informations about a exam", () => {
-                return chai
-                    .request(process.env.NODE_SERVER)
-                    .get(`/exams/${mockExamRegistered.idExam}`)
-                    .set("Authorization", `Bearer ${mockUserAuthenticated.token}`)
-                    .then((res) => {
-                        if (res.statusCode !== 200) {
-                            throw new Error(chai.expect(res).have.status(200));
-                        }
-
-                        return chai.expect(res).have.status(200);
-                    })
-                    .catch((err) => {
-                        throw err;
-                    });
-            });
-
-            it("should show a list of active exams", () => {
-                return chai
-                    .request(process.env.NODE_SERVER)
-                    .get(`/exams`)
-                    .set("Authorization", `Bearer ${mockUserAuthenticated.token}`)
-                    .then((res) => {
-                        if (res.statusCode !== 200) {
-                            throw new Error(chai.expect(res).have.status(200));
-                        }
+                        mockExamLaboratoryRegistered.idExamLaboratory =
+                            res.body.exams_laboratories.id_exams_laboratories;
 
                         return chai.expect(res).have.status(200);
                     })
@@ -149,10 +83,10 @@ describe("Integrations tests", () => {
         });
 
         describe("/DELETE", () => {
-            it("should delete a exam", () => {
+            it("should delete a exam-laboratory association", () => {
                 return chai
                     .request(process.env.NODE_SERVER)
-                    .delete(`/exams/${mockExamRegistered.idExam}`)
+                    .delete(`/exams-laboratories/${mockExamLaboratoryRegistered.idExamLaboratory}`)
                     .set("Authorization", `Bearer ${mockUserAuthenticated.token}`)
                     .then((res) => {
                         if (res.statusCode !== 200) {
