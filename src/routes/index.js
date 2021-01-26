@@ -3,6 +3,7 @@ import Sessions from "../controllers/Sessions";
 import Users from "../controllers/Users";
 import Laboratories from "../controllers/Laboratories";
 import Exams from "../controllers/Exams";
+import ExamsLaboratories from "../controllers/ExamsLaboratories";
 import Passwords from "../controllers/Passwords";
 import authMiddleware from "../middlewares/authMiddleware";
 
@@ -34,14 +35,20 @@ router.delete("/laboratories/:idLaboratory", authMiddleware, Laboratories.delete
 
 //Exams routes
 
-router.post("/exams", authMiddleware, Exams.create);
-
 router.get("/exams", authMiddleware, Exams.index);
 
 router.get("/exams/:idExam", authMiddleware, Exams.view);
 
 router.delete("/exams/:idExam", authMiddleware, Exams.delete);
 
+router.post("/exams", authMiddleware, Exams.create);
+
 router.put("/exams/:idExam", authMiddleware, Exams.update);
+
+//Association exams routes
+
+router.post("/laboratories/:idLaboratory/exams/:idExam/associate", authMiddleware, ExamsLaboratories.create);
+
+router.delete("/exams-laboratories/:idExamLaboratory", authMiddleware, ExamsLaboratories.delete);
 
 export default router;
