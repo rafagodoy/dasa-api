@@ -82,7 +82,7 @@ describe("Integrations tests", () => {
                             throw new Error(chai.expect(res).have.status(200));
                         }
 
-                        mockExamRegistered.idExam = res.body.exam.id_exam;
+                        mockExamRegistered.idExam = res.body.exam.id_exams;
 
                         return chai.expect(res).have.status(200);
                     })
@@ -113,10 +113,46 @@ describe("Integrations tests", () => {
         });
 
         describe("/GET", () => {
+            it("should show informations about a exam", () => {
+                return chai
+                    .request(process.env.NODE_SERVER)
+                    .get(`/exams/${mockExamRegistered.idExam}`)
+                    .set("Authorization", `Bearer ${mockUserAuthenticated.token}`)
+                    .then((res) => {
+                        if (res.statusCode !== 200) {
+                            throw new Error(chai.expect(res).have.status(200));
+                        }
+
+                        return chai.expect(res).have.status(200);
+                    })
+                    .catch((err) => {
+                        throw err;
+                    });
+            });
+
             it("should show a list of active exams", () => {
                 return chai
                     .request(process.env.NODE_SERVER)
                     .get(`/exams`)
+                    .set("Authorization", `Bearer ${mockUserAuthenticated.token}`)
+                    .then((res) => {
+                        if (res.statusCode !== 200) {
+                            throw new Error(chai.expect(res).have.status(200));
+                        }
+
+                        return chai.expect(res).have.status(200);
+                    })
+                    .catch((err) => {
+                        throw err;
+                    });
+            });
+        });
+
+        describe("/DELETE", () => {
+            it("should delete a exam", () => {
+                return chai
+                    .request(process.env.NODE_SERVER)
+                    .delete(`/exams/${mockExamRegistered.idExam}`)
                     .set("Authorization", `Bearer ${mockUserAuthenticated.token}`)
                     .then((res) => {
                         if (res.statusCode !== 200) {
