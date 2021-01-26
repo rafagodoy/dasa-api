@@ -2,12 +2,13 @@ import { registerAndUpdateLaboratorySchema } from "../validations/laboratories";
 import validateSchema from "../validations/validateSchema";
 import throwError from "../helpers/throwError";
 import LaboratoriesService from "../services/LaboratoriesService";
+import ExamsLaboratoriesService from "../services/ExamsLaboratoriesService";
 
 class Laboratories {
     async index(req, res, next) {
         try {
-            const service = new LaboratoriesService(null, next);
-            const serviceResponse = await service.listLaboratories();
+            const service = new ExamsLaboratoriesService(next);
+            const serviceResponse = await service.listExamsAssociatesInALaboratory();
 
             res.status(200).json(serviceResponse);
         } catch (error) {
