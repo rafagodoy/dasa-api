@@ -20,6 +20,9 @@ const sequelize = new Sequelize(
             timestamps: false,
             freezeTableName: true,
         },
+        dialectOptions: {
+            ssl: true,
+        },
     }
 );
 
