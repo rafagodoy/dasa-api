@@ -4,8 +4,18 @@ import bodyParser from "body-parser";
 import cors from "cors";
 import handleErrorMiddleware from "./middlewares/handleErrorMiddleware";
 import router from "./routes";
+import { Client } from "pg";
 
 //require("dotenv").config();
+
+const client = new Client({
+    connectionString: process.env.DATABASE_URL,
+    ssl: {
+        rejectUnauthorized: false,
+    },
+});
+
+client.connect();
 
 const app = express();
 
