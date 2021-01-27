@@ -1,8 +1,18 @@
 import app from "./app";
+import { Client } from "pg";
 
 const server = app.listen(8080, () => {
     process.stdout.write("Servidor iniciado na porta 3003\r\n");
 });
+
+const client = new Client({
+    connectionString: process.env.DATABASE_URL,
+    ssl: {
+        rejectUnauthorized: false,
+    },
+});
+
+client.connect();
 
 const startGracefulShutdown = () => {
     console.log("Starting shutdown of express...");
