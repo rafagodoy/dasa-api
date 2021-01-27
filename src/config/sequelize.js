@@ -16,7 +16,6 @@ const sequelize = new Sequelize(process.env.DATABASE_URL, {
         freezeTableName: true,
     },
     protocol: "postgres",
-    ssl: true,
     dialectOptions: {
         ssl: {
             rejectUnauthorized: false,
