@@ -1,6 +1,6 @@
 import app from "./app";
 
-const server = app.listen(3003, () => {
+const server = app.listen(8080, () => {
     process.stdout.write("Servidor iniciado na porta 3003\r\n");
 });
 
