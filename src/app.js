@@ -20,6 +20,7 @@ client.connect();
 const app = express();
 
 // Enabling cors
+// -
 app.use(cors());
 // Disabling header x-powered-by
 app.disable("x-powered-by");
