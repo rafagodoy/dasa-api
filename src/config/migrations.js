@@ -17,7 +17,7 @@ module.exports = {
         username: process.env.POSTGRES_USER,
         password: process.env.POSTGRES_PASSWORD,
         database: "dasa-api-personal",
-        host: "127.0.0.1",
+        host: process.env.NODE_SERVER,
         dialect: "postgres",
         ssl: true,
         dialectOptions: {
