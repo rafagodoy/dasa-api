@@ -20,6 +20,7 @@ const sequelize = new Sequelize(
             timestamps: false,
             freezeTableName: true,
         },
+        protocol: "postgres",
         dialectOptions: {
             ssl: true,
         },
