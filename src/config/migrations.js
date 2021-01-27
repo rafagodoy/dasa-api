@@ -14,14 +14,6 @@ module.exports = {
         dialect: "postgres",
     },
     production: {
-        username: process.env.POSTGRES_USER,
-        password: process.env.POSTGRES_PASSWORD,
-        database: "dasa-api-personal",
-        host: process.env.DATABASE_URL,
-        dialect: "postgres",
-        ssl: true,
-        dialectOptions: {
-            ssl: true,
-        },
+        use_env_variable: process.env.DATABASE_URL,
     },
 };
