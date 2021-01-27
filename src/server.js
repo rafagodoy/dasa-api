@@ -1,7 +1,7 @@
 import app from "./app";
 import { Client } from "pg";
 
-const server = app.listen(80, () => {
+const server = app.listen(process.env.PORT, () => {
     process.stdout.write("Servidor iniciado na porta 80\r\n");
 });
 
