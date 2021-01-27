@@ -27,7 +27,8 @@ jobs:
     - run: npm install
     - run: npm ci
     - run: npm run build --if-present
-    - run: NODE_ENV=production npm start
+    - run: heroku git:remote --app dasa-api-personal
+    - run: heroku run npm start
     #- run: npm test
 
   release:
