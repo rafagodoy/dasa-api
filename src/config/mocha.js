@@ -1,5 +1,5 @@
 const getServer = () => {
-    return process.env.NODE_SERVER || "http://localhost:3003";
+    return process.env.NODE_SERVER;
 };
 
 const serverTests = getServer();
