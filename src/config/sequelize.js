@@ -3,6 +3,12 @@ import { Sequelize, DataTypes, Model } from "sequelize";
 const Op = Sequelize.Op;
 
 const getConnection = () => {
+    console.log(process.env.NODE_ENV);
+    console.log(process.env.NODE_ENV);
+    console.log(process.env.NODE_ENV);
+    console.log(process.env.DATABASE_URL);
+    console.log(process.env.DATABASE_URL);
+    console.log(process.env.DATABASE_URL);
     if (process.env.NODE_ENV === "development") {
         return new Sequelize(process.env.POSTGRES_DATABASE, process.env.POSTGRES_USER, process.env.POSTGRES_PASSWORD, {
             host: process.env.POSTGRES_SERVER,
