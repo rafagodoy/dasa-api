@@ -22,6 +22,12 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - name: Use Node.js
+      with:
+        node-version: '12.x'
+    - run: npm install
+    - run: npm ci
+    - run: npm run build --if-present      
+    - run: npm test
       env:
         NODE_ENV: production
         CRYPTO_SECRET: ${{ secrets.CRYPTO_SECRET }}
@@ -33,12 +39,6 @@ jobs:
         POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
         POSTGRES_SERVER: ${{ secrets.POSTGRES_SERVER }}
         POSTGRES_USER: ${{ secrets.POSTGRES_USER }}
-      with:
-        node-version: '12.x'
-    - run: npm install
-    - run: npm ci
-    - run: npm run build --if-present      
-    - run: npm test
 
   release:
       needs: build
