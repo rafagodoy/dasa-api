@@ -1,6 +1,6 @@
 import chai, { assert } from "chai";
 import chaiHttp from "chai-http";
-import { serverTests } from "../../src/config/mocha";
+import serverTests from "../../src/app";
 import chaiSubset from "chai-subset";
 import faker from "faker";
 
