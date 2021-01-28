@@ -1,4 +1,5 @@
 import chai, { assert } from "chai";
+import { serverTests } from "../../src/config/mocha";
 import chaiHttp from "chai-http";
 import chaiSubset from "chai-subset";
 import faker from "faker";
@@ -26,7 +27,7 @@ describe("Integrations tests", () => {
         describe("/POST", () => {
             it("should register a new user in database", () => {
                 return chai
-                    .request(process.env.NODE_SERVER)
+                    .request(serverTests)
                     .post("/users")
                     .send({ ...mockUser, password_confirm: mockUser.password })
                     .then((res) => {
@@ -43,7 +44,7 @@ describe("Integrations tests", () => {
 
             it("should get a session of user authenticated", () => {
                 return chai
-                    .request(process.env.NODE_SERVER)
+                    .request(serverTests)
                     .post("/users/sessions")
                     .send({ email: mockUser.email, password: mockUser.password })
                     .then((res) => {
@@ -63,7 +64,7 @@ describe("Integrations tests", () => {
 
             it("should associate a exam in the laboratory", () => {
                 return chai
-                    .request(process.env.NODE_SERVER)
+                    .request(serverTests)
                     .post("/laboratories/1/exams/2/associate")
                     .set("Authorization", `Bearer ${mockUserAuthenticated.token}`)
                     .then((res) => {
@@ -85,7 +86,7 @@ describe("Integrations tests", () => {
         describe("/DELETE", () => {
             it("should delete a exam-laboratory association", () => {
                 return chai
-                    .request(process.env.NODE_SERVER)
+                    .request(serverTests)
                     .delete(`/exams-laboratories/${mockExamLaboratoryRegistered.idExamLaboratory}`)
                     .set("Authorization", `Bearer ${mockUserAuthenticated.token}`)
                     .then((res) => {

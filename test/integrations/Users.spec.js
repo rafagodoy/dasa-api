@@ -1,5 +1,6 @@
 import chai, { assert } from "chai";
 import chaiHttp from "chai-http";
+import { serverTests } from "../../src/config/mocha";
 import chaiSubset from "chai-subset";
 import faker from "faker";
 
@@ -40,7 +41,7 @@ describe("Integrations tests", () => {
         describe("/POST", () => {
             it("should register a new user in database", () => {
                 return chai
-                    .request(process.env.NODE_SERVER)
+                    .request(serverTests)
                     .post("/users")
                     .send({ ...mockUser, password_confirm: mockUser.password })
                     .then((res) => {
@@ -57,7 +58,7 @@ describe("Integrations tests", () => {
 
             it("should deny to duplicate emails in database", () => {
                 return chai
-                    .request(process.env.NODE_SERVER)
+                    .request(serverTests)
                     .post("/users")
                     .send({ ...mockUser, password_confirm: mockUser.password })
                     .then((res) => {
@@ -74,7 +75,7 @@ describe("Integrations tests", () => {
 
             it("should register another user in database", () => {
                 return chai
-                    .request(process.env.NODE_SERVER)
+                    .request(serverTests)
                     .post("/users")
                     .send({ ...mockAnotherkUser, password_confirm: mockAnotherkUser.password })
                     .then((res) => {
@@ -91,7 +92,7 @@ describe("Integrations tests", () => {
 
             it("should send a bad request when the format data request was wrong", () => {
                 return chai
-                    .request(process.env.NODE_SERVER)
+                    .request(serverTests)
                     .post("/users")
                     .send({
                         name: faker.name.findName(),
@@ -113,7 +114,7 @@ describe("Integrations tests", () => {
         describe("/SESSIONS", () => {
             it("should get a user session with token and id in database", () => {
                 return chai
-                    .request(process.env.NODE_SERVER)
+                    .request(serverTests)
                     .post("/users/sessions")
                     .send({ email: mockUser.email, password: mockUser.password })
                     .then((res) => {
@@ -135,7 +136,7 @@ describe("Integrations tests", () => {
         describe("/GET", () => {
             it("should check if format user response has the necessary attributes", () => {
                 return chai
-                    .request(process.env.NODE_SERVER)
+                    .request(serverTests)
                     .get(`/users/${mockUserAuthenticated.idUser}`)
                     .set("Authorization", `Bearer ${mockUserAuthenticated.token}`)
                     .then((res) => {
@@ -169,7 +170,7 @@ describe("Integrations tests", () => {
         describe("/PUT", () => {
             it("should update the data registered user in database", () => {
                 return chai
-                    .request(process.env.NODE_SERVER)
+                    .request(serverTests)
                     .put(`/users/${mockUserAuthenticated.idUser}`)
                     .set("Authorization", `Bearer ${mockUserAuthenticated.token}`)
                     .send(mockUserToUpdate)
@@ -186,7 +187,7 @@ describe("Integrations tests", () => {
 
             it("should deny to duplicate emails in database", () => {
                 return chai
-                    .request(process.env.NODE_SERVER)
+                    .request(serverTests)
                     .put(`/users/${mockUserAuthenticated.idUser}`)
                     .set("Authorization", `Bearer ${mockUserAuthenticated.token}`)
                     .send({ name: mockUserToUpdate.name, email: mockAnotherkUser.email })
@@ -207,7 +208,7 @@ describe("Integrations tests", () => {
 
             it("should allow user to change his password", () => {
                 return chai
-                    .request(process.env.NODE_SERVER)
+                    .request(serverTests)
                     .patch(`/users/${mockUserAuthenticated.idUser}/password-change`)
                     .set("Authorization", `Bearer ${mockUserAuthenticated.token}`)
                     .send({ password: newPassword, password_confirm: newPassword })
@@ -224,7 +225,7 @@ describe("Integrations tests", () => {
 
             it("should deny to change password of another user", () => {
                 return chai
-                    .request(process.env.NODE_SERVER)
+                    .request(serverTests)
                     .patch(`/users/1/password-change`)
                     .set("Authorization", `Bearer ${mockUserAuthenticated.token}`)
                     .send({ password: newPassword, password_confirm: newPassword })

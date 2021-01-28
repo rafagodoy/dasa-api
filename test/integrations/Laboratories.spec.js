@@ -1,4 +1,5 @@
 import chai, { assert } from "chai";
+import { serverTests } from "../../src/config/mocha";
 import chaiHttp from "chai-http";
 import chaiSubset from "chai-subset";
 import faker from "faker";
@@ -36,7 +37,7 @@ describe("Integrations tests", () => {
         describe("/POST", () => {
             it("should register a new user in database", () => {
                 return chai
-                    .request(process.env.NODE_SERVER)
+                    .request(serverTests)
                     .post("/users")
                     .send({ ...mockUser, password_confirm: mockUser.password })
                     .then((res) => {
@@ -53,7 +54,7 @@ describe("Integrations tests", () => {
 
             it("should get a session of user authenticated", () => {
                 return chai
-                    .request(process.env.NODE_SERVER)
+                    .request(serverTests)
                     .post("/users/sessions")
                     .send({ email: mockUser.email, password: mockUser.password })
                     .then((res) => {
@@ -72,13 +73,15 @@ describe("Integrations tests", () => {
             });
 
             it("should register a new laboratory", () => {
-                console.log(process.env.NODE_SERVER);
-                console.log(process.env.NODE_SERVER);
-                console.log(process.env.NODE_SERVER);
-                console.log(process.env.NODE_SERVER);
-                console.log(process.env.NODE_SERVER);
+                console.log(serverTests);
+                console.log(process.env.PORT);
+                console.log(serverTests);
+                console.log(serverTests);
+                console.log(process.env.PORT);
+                console.log(serverTests);
+                console.log(serverTests);
                 return chai
-                    .request(process.env.NODE_SERVER)
+                    .request(serverTests)
                     .post("/laboratories")
                     .send({ ...mockLaboratory })
                     .set("Authorization", `Bearer ${mockUserAuthenticated.token}`)
@@ -100,7 +103,7 @@ describe("Integrations tests", () => {
         describe("/PUT", () => {
             it("should update a laboratory registered", () => {
                 return chai
-                    .request(process.env.NODE_SERVER)
+                    .request(serverTests)
                     .put(`/laboratories/${mockLaboratoryRegistered.idLaboratory}`)
                     .send({ ...mockLaboratoryToUpdate })
                     .set("Authorization", `Bearer ${mockUserAuthenticated.token}`)
@@ -120,7 +123,7 @@ describe("Integrations tests", () => {
         describe("/GET", () => {
             it("should show informations about a laboratory", () => {
                 return chai
-                    .request(process.env.NODE_SERVER)
+                    .request(serverTests)
                     .get(`/laboratories/${mockLaboratoryRegistered.idLaboratory}`)
                     .set("Authorization", `Bearer ${mockUserAuthenticated.token}`)
                     .then((res) => {
@@ -137,7 +140,7 @@ describe("Integrations tests", () => {
 
             it("should show a list of active laboratories", () => {
                 return chai
-                    .request(process.env.NODE_SERVER)
+                    .request(serverTests)
                     .get(`/laboratories`)
                     .set("Authorization", `Bearer ${mockUserAuthenticated.token}`)
                     .then((res) => {
@@ -156,7 +159,7 @@ describe("Integrations tests", () => {
         describe("/DELETE", () => {
             it("should delete a laboratory", () => {
                 return chai
-                    .request(process.env.NODE_SERVER)
+                    .request(serverTests)
                     .delete(`/laboratories/${mockLaboratoryRegistered.idLaboratory}`)
                     .set("Authorization", `Bearer ${mockUserAuthenticated.token}`)
                     .then((res) => {
