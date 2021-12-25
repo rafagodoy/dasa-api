@@ -1,4 +1,4 @@
-﻿# DASA-API
+﻿# LAB-API
 
 LAB-API fornece a API responsável pelo gerenciamento de todos os laboratórios e exames da rede nacional brasileira.
 
